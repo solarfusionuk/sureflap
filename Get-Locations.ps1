@@ -8,7 +8,7 @@
 #>
 
 $flaps =
-	( 151961, "garden room", "outside", "garden room" ),
+	( 152524, "Inside", "Outside", "Cat flap" ),
 	( 166844, "garage", "outside", "garage" ),
 	( 113430, "house", "garage", "utility" ),
 	(  $null, "[inside]", "[outside]","") | % { [PSCustomObject]@{id = $_[0]; in = $_[1]; out = $_[2]; name = $_[3] } }
@@ -26,6 +26,7 @@ ForEach ($pet in $sureFlapObject)
 	# where from SureFlap API: 1 is coming in, 2 = going out
 	# find the details of the flap from the device_id to determine where the pet is
 	$matchingFlap = $flaps | ?{$_.id -eq $pet.position.device_id} | % { $_ }
+$matchingFlap
 	$location = $matchingFlap.$($flapColumns[$pet.position.where])
 
 	$petObject = New-Object -TypeName PSObject
